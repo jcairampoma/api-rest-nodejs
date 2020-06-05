@@ -28,6 +28,22 @@ module.exports = class PersonController {
 
   /**
    *
+   * @param {object} ctx: contexto de koa que contiene los parameteros de la solicitud, en este caso
+   * desde el url de donde sacaremos el valor del parametro index (ctx.params.index)
+   */
+  async getByFilter(ctx) {
+    const person = ctx.request.body
+    const data = await repository.find(person, true)
+
+    if (data) {
+      ctx.body = data
+    } else {
+      ctx.throw(404, `No se ha encontrado la persona`)
+    }
+  }
+
+  /**
+   *
    * @param {object} ctx: contexto de koa que contiene los parameteros de la solicitud, en este caso desde el body,
    * obtendremos las propiedades de la persona a guardar a traves de ctx.request.body
    */
